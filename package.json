@@ -1,0 +1,30 @@
+{
+  "name": "hot-restaurant",
+  "version": "1.0.0",
+  "description": "Using node, express, and jquery to gather the first 5 reservations and put them on a waiting list.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brendan-kellams/Hot-Restaurant.git"
+  },
+  "keywords": [
+    "Jquery",
+    "Node",
+    "Express",
+    "HTML"
+  ],
+  "author": "Brendan Kellams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brendan-kellams/Hot-Restaurant/issues"
+  },
+  "homepage": "https://github.com/brendan-kellams/Hot-Restaurant#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}
