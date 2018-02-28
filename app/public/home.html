@@ -17,7 +17,7 @@
     <div class="container">
         <div class="jumbotron">
             <h1 class="text-center">
-                <span class="glyphicon glyphicon-fire"></span> 
+                <span class="glyphicon glyphicon-fire"></span>
                 Hot Restaurant
             </h1>
             <hr>
@@ -38,15 +38,28 @@
         <footer class="footer">
             <div class="container">
                 <p>
-                    <a href="/api/tables">API Table Link</a>
-                     | 
+                    <a href="#" id="clear">Clear Table</a>
+                    |
+                    <a href="/api/tables">API Table List</a>
+                    |
                     <a href="/api/waitlist">API Wait List</a>
+                    |
+                    <a href="https://github.com/brendan-kellams/Hot-Restaurant">GitHub Repo</a>
                 </p>
             </div>
         </footer>
     </div>
     <script>
-
+    function clearTable() {
+        var currentURL = window.location.origin;
+        $.ajax({url: currentURL + "/api/clear", method: "POST"})
+    }
+    
+    $("#clear").on('click', function() {
+        alert("Clearing...");
+        clearTable();
+        location.reload();
+    });
     </script>
 </body>
 

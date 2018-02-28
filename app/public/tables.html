@@ -17,14 +17,14 @@
     <div class="container">
         <div class="jumbotron">
             <h1 class="text-center">
-                <span class="glyphicon glyphicon-fire"></span> 
+                <span class="glyphicon glyphicon-fire"></span>
                 Hot Restaurant
             </h1>
             <hr>
             <h2 class="text-center">Current Reservations and Waiting List</h2>
             <br>
             <div class="text-center">
-                <a href="/reservation">
+                <a href="/reservations">
                     <button type="button" class="btn btn-danger btn-lg">
                         <span class="glyphicon glyphicon-calendar"></span> Make Reservations</button>
                 </a>
@@ -47,36 +47,6 @@
                         </h3>
                     </div>
                     <div class="panel-body" id="tableSection">
-                        <div class="well" id="table-1">
-                            <h2>
-                                <span class="label label-primary">1</span>
-                                | 1
-                            </h2>
-                        </div>
-                        <div class="well" id="table-2">
-                            <h2>
-                                <span class="label label-primary">2</span>
-                                | 1
-                            </h2>
-                        </div>
-                        <div class="well" id="table-3">
-                            <h2>
-                                <span class="label label-primary">3</span>
-                                | 1
-                            </h2>
-                        </div>
-                        <div class="well" id="table-4">
-                            <h2>
-                                <span class="label label-primary">4</span>
-                                | 1
-                            </h2>
-                        </div>
-                        <div class="well" id="table-5">
-                            <h2>
-                                <span class="label label-primary">5</span>
-                                | 1
-                            </h2>
-                        </div>
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -90,17 +60,90 @@
                 <footer class="footer">
                     <div class="container">
                         <p>
-                            <a href="/api/tables">API Table Link</a>
+                            <a href="#" id="clear">Clear Table</a>
+                            |
+                            <a href="/api/tables">API Table List</a>
                             |
                             <a href="/api/waitlist">API Wait List</a>
+                            |
+                            <a href="https://github.com/brendan-kellams/Hot-Restaurant">GitHub Repo</a>
                         </p>
                     </div>
                 </footer>
             </div>
         </div>
     </div>
-    
-
 </body>
+
+<script type="text/javascript">
+
+    function runTableQuery() {
+        var currentURL = window.location.origin;
+
+        $.ajax({ url: currentURL + "/api/tables", method: "GET" })
+            .done(function (tableData) {
+                console.log("---------------------");
+                console.log("URL: " + currentURL + "/api/tables");
+                console.log("---------------------");
+                console.log(tableData);
+                console.log("---------------------");
+
+                for (var i = 0; i < tableData.length; i++) {
+                    console.log(tableData[i]);
+
+                    var tableSection = $("<div>");
+                    tableSection.addClass("well");
+                    tableSection.attr("id", "tableWell-" + i + 1);
+                    $("#tableSection").append(tableSection);
+
+                    var tableNumber = i + 1;
+
+                    $("#tableWell-" + i + 1).append("<h2><span class='label label-primary'>" + 
+                        tableNumber + '</span> | ' + tableData[i].customerID + '</h2>');
+                }
+            });
+    }
+
+        function runWaitListQuery() {
+        var currentURL = window.location.origin;
+
+        $.ajax({ url: currentURL + "/api/waitlist", method: "GET" })
+            .done(function (waitingListData) {
+                console.log("---------------------");
+                console.log("URL: " + currentURL + "/api/waitlist");
+                console.log("---------------------");
+                console.log(waitingListData);
+                console.log("---------------------");
+
+                for (var i = 0; i < waitingListData.length; i++) {
+                    console.log(waitingListData[i]);
+
+                    var waitlistSection = $("<div>");
+                    waitlistSection.addClass("well");
+                    waitlistSection.attr("id", "waitlistWell-" + i + 1);
+                    $("#waitlistSection").append(waitlistSection);
+
+                    var tableNumber = i + 1;
+
+                    $("#waitlistWell-" + i + 1).append("<h2><span class='label label-primary'>" + 
+                        tableNumber + '</span> | ' + waitingListData[i].customerID + '</h2>');
+                }
+            });
+    }
+
+    function clearTable() {
+        var currentURL = window.location.origin;
+        $.ajax({url: currentURL + "/api/clear", method: "POST"})
+    }
+    
+    $("#clear").on('click', function() {
+        alert("Clearing...");
+        clearTable();
+        location.reload();
+    });
+
+    runTableQuery();
+    runWaitListQuery();
+</script>
 
 </html>
